@@ -2,78 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Equilateral Balance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sovereign Equilateral</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap');
-        body { background: #020406; color: #f8fafc; font-family: 'Inter', sans-serif; touch-action: manipulation; }
+        body { 
+            background: #020406; 
+            color: #f8fafc; 
+            font-family: 'Inter', sans-serif; 
+            touch-action: manipulation;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
         
-        /* Sacred Geometry */
-        .white-line { stroke: #fff; stroke-width: 0.6; fill: none; opacity: 0.2; }
-        .psy-circle { stroke-width: 1; fill: none; animation: chroma 12s infinite linear; }
+        .white-line { stroke: #fff; stroke-width: 1; fill: none; opacity: 0.2; }
+        .psy-circle { stroke-width: 1.5; fill: none; animation: chroma 12s infinite linear; }
         @keyframes chroma { 0% { stroke: #ff00ff; } 50% { stroke: #00ffff; } 100% { stroke: #ff00ff; } }
         
         .flare-bloom { transition: fill 0.4s; filter: blur(15px); opacity: 0.3; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; }
+        
+        /* Icon Layering Fix for iPhone */
+        .node-container {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
         
         .icon-light, .icon-shadow { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            position: absolute;
+            width: 100%; height: 100%; 
             transition: opacity 0.4s ease, stroke 0.4s ease, fill 0.4s ease;
-            stroke-width: 1.5; 
+            stroke-width: 2; 
             fill-opacity: 0.3;
         }
 
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
-        input[type=range]::-webkit-slider-runnable-track { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #fff; margin-top: -8px; border: 2px solid #020406; box-shadow: 0 0 12px rgba(255,255,255,0.4); }
+        input[type=range]::-webkit-slider-runnable-track { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #fff; margin-top: -10px; border: 3px solid #020406; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
         
         .hidden { display: none; }
         .tab-active { color: #10b981; border-bottom: 2px solid #10b981; }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen overflow-hidden">
 
-    <main id="page-home" class="flex-1 flex flex-col items-center p-4 pb-28">
-        <div class="relative w-full max-w-sm aspect-square my-6">
+    <!-- HOME PAGE -->
+    <main id="page-home" class="flex-1 flex flex-col items-center justify-center p-4 pb-24">
+        
+        <!-- THE SYMBOL WRAPPER -->
+        <div id="symbol-frame" class="relative w-full max-w-[340px] aspect-square flex items-center justify-center">
+            
+            <!-- SVG Layer -->
             <svg viewBox="0 0 100 100" class="w-full h-full overflow-visible">
-                
-                <!-- Equilateral Triangle Geometry -->
-                <!-- Top: (50, 15.7), Bottom Left: (10, 85), Bottom Right: (90, 85) -->
                 <polygon points="50,15.7 90,85 10,85" class="white-line" />
-                
-                <!-- Inner Phasing Circle (Centered at Triangle Centroid 50, 61.9) -->
                 <circle cx="50" cy="61.9" r="24" class="psy-circle" />
-
-                <!-- Inverted Pentagram (Tips touching the circle) -->
                 <path d="M50,85.9 L36.5,43.3 L72.8,69.5 L27.2,69.5 L63.5,43.3 Z" class="white-line" />
+                
+                <!-- Glow Orbs (Still in SVG for proper layering) -->
+                <circle id="b-assets" cx="50" cy="15.7" r="12" class="flare-bloom"/>
+                <circle id="b-serotonin" cx="10" cy="85" r="12" class="flare-bloom"/>
+                <circle id="b-health" cx="90" cy="85" r="12" class="flare-bloom"/>
+                <circle id="b-nic" cx="36.5" cy="43.3" r="10" class="flare-bloom"/>
+                <circle id="b-mj" cx="63.5" cy="43.3" r="10" class="flare-bloom"/>
+                <circle id="b-alc" cx="72.8" cy="69.5" r="10" class="flare-bloom"/>
+                <circle id="b-food" cx="50" cy="85.9" r="10" class="flare-bloom"/>
+                <circle id="b-bull" cx="27.2" cy="69.5" r="10" class="flare-bloom"/>
 
-                <!-- Nodes -->
-                <!-- Triangle Vertices -->
-                <g id="n-assets"><circle cx="50" cy="15.7" r="10" class="flare-bloom"/><foreignObject x="44" y="8" width="12" height="12"><div class="relative w-full h-full"><i data-lucide="coins" class="icon-light"></i><i data-lucide="flame" class="icon-shadow"></i></div></foreignObject></g>
-                <g id="n-serotonin"><circle cx="10" cy="85" r="10" class="flare-bloom"/><foreignObject x="4" y="78" width="12" height="12"><div class="relative w-full h-full"><i data-lucide="atom" class="icon-light"></i><i data-lucide="skull" class="icon-shadow"></i></div></foreignObject></g>
-                <g id="n-health"><circle cx="90" cy="85" r="10" class="flare-bloom"/><foreignObject x="84" y="78" width="12" height="12"><div class="relative w-full h-full"><i data-lucide="activity" class="icon-light"></i><i data-lucide="heart-off" class="icon-shadow"></i></div></foreignObject></g>
-
-                <!-- Pentagram Vertices (Clockwise starting from Top Left) -->
-                <g id="n-nic"><circle cx="36.5" cy="43.3" r="8" class="flare-bloom"/><foreignObject x="32.5" y="38" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="hourglass" class="icon-light"></i><i data-lucide="wind" class="icon-shadow"></i></div></foreignObject></g>
-                <g id="n-mj"><circle cx="63.5" cy="43.3" r="8" class="flare-bloom"/><foreignObject x="59.5" y="38" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="music" class="icon-light"></i><i data-lucide="cloud" class="icon-shadow"></i></div></foreignObject></g>
-                <g id="n-alc"><circle cx="72.8" cy="69.5" r="8" class="flare-bloom"/><foreignObject x="74" y="66" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="coffee" class="icon-light"></i><i data-lucide="glass-water" class="icon-shadow"></i></div></foreignObject></g>
-                <g id="n-food"><circle cx="50" cy="85.9" r="8" class="flare-bloom"/><foreignObject x="46" y="88" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="utensils" class="icon-light"></i><i data-lucide="pizza" class="icon-shadow"></i></div></foreignObject></g>
-                <g id="n-bull"><circle cx="27.2" cy="69.5" r="8" class="flare-bloom"/><foreignObject x="18" y="66" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="snowflake" class="icon-light"></i><i data-lucide="zap" class="icon-shadow"></i></div></foreignObject></g>
-
-                <!-- Centered Yin Yang -->
+                <!-- Yin Yang -->
                 <g transform="translate(50, 61.9) scale(0.12)"><circle r="100" fill="#fff"/><path d="M 0,-100 A 100,100 0 0,1 0,100 A 50,50 0 0,1 0,0 A 50,50 0 0,0 0,-100" fill="#000"/></g>
             </svg>
+
+            <!-- ICON OVERLAY LAYER (iPhone Fix) -->
+            <!-- Triangle -->
+            <div class="node-container w-10 h-10" style="top: 15.7%; left: 50%;" data-key="assets">
+                <i data-lucide="coins" class="icon-light"></i><i data-lucide="flame" class="icon-shadow"></i>
+            </div>
+            <div class="node-container w-10 h-10" style="top: 85%; left: 10%;" data-key="serotonin">
+                <i data-lucide="atom" class="icon-light"></i><i data-lucide="skull" class="icon-shadow"></i>
+            </div>
+            <div class="node-container w-10 h-10" style="top: 85%; left: 90%;" data-key="health">
+                <i data-lucide="activity" class="icon-light"></i><i data-lucide="heart-off" class="icon-shadow"></i>
+            </div>
+            <!-- Pentagram -->
+            <div class="node-container w-8 h-8" style="top: 43.3%; left: 36.5%;" data-key="nic">
+                <i data-lucide="hourglass" class="icon-light"></i><i data-lucide="wind" class="icon-shadow"></i>
+            </div>
+            <div class="node-container w-8 h-8" style="top: 43.3%; left: 63.5%;" data-key="mj">
+                <i data-lucide="music" class="icon-light"></i><i data-lucide="cloud" class="icon-shadow"></i>
+            </div>
+            <div class="node-container w-8 h-8" style="top: 69.5%; left: 72.8%;" data-key="alc">
+                <i data-lucide="coffee" class="icon-light"></i><i data-lucide="glass-water" class="icon-shadow"></i>
+            </div>
+            <div class="node-container w-8 h-8" style="top: 85.9%; left: 50%;" data-key="food">
+                <i data-lucide="utensils" class="icon-light"></i><i data-lucide="pizza" class="icon-shadow"></i>
+            </div>
+            <div class="node-container w-8 h-8" style="top: 69.5%; left: 27.2%;" data-key="bull">
+                <i data-lucide="snowflake" class="icon-light"></i><i data-lucide="zap" class="icon-shadow"></i>
+            </div>
         </div>
 
-        <div class="w-full max-w-md space-y-4 px-2">
-            <div class="glass p-5 space-y-7"><input type="range" id="in-assets" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-serotonin" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-health" oninput="updateUI()" onchange="logSnapshot()"></div>
-            <div class="glass p-5 space-y-7"><input type="range" id="in-nic" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-mj" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-alc" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-food" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-bull" oninput="updateUI()" onchange="logSnapshot()"></div>
+        <!-- CONTROLS -->
+        <div class="w-full max-w-md space-y-3 px-2 mt-4">
+            <div class="glass p-4 space-y-6">
+                <input type="range" id="in-assets" oninput="updateUI()" onchange="logSnapshot()">
+                <input type="range" id="in-serotonin" oninput="updateUI()" onchange="logSnapshot()">
+                <input type="range" id="in-health" oninput="updateUI()" onchange="logSnapshot()">
+            </div>
+            <div class="glass p-4 space-y-6">
+                <input type="range" id="in-nic" oninput="updateUI()" onchange="logSnapshot()">
+                <input type="range" id="in-mj" oninput="updateUI()" onchange="logSnapshot()">
+                <input type="range" id="in-alc" oninput="updateUI()" onchange="logSnapshot()">
+                <input type="range" id="in-food" oninput="updateUI()" onchange="logSnapshot()">
+                <input type="range" id="in-bull" oninput="updateUI()" onchange="logSnapshot()">
+            </div>
         </div>
     </main>
 
+    <!-- ANALYTICS -->
     <main id="page-stats" class="hidden flex-1 p-6 pb-28 overflow-y-auto">
         <div class="glass p-4 mb-4"><canvas id="mainChart"></canvas></div>
         <div class="flex gap-2 mb-6">
@@ -83,7 +135,8 @@
         <div id="stats-list" class="space-y-3"></div>
     </main>
 
-    <nav class="fixed bottom-0 w-full bg-black/90 backdrop-blur-md border-t border-white/5 flex justify-around p-5">
+    <!-- NAV -->
+    <nav class="fixed bottom-0 w-full bg-black/90 backdrop-blur-md border-t border-white/5 flex justify-around p-5 pb-8">
         <button onclick="showPage('home')" id="nav-home" class="tab-active text-[10px] uppercase font-bold tracking-widest">Symbol</button>
         <button onclick="showPage('stats')" id="nav-stats" class="text-slate-500 text-[10px] uppercase font-bold tracking-widest">Analytics</button>
     </nav>
@@ -103,12 +156,18 @@
             KEYS.forEach(key => {
                 const val = document.getElementById(`in-${key}`).value;
                 const color = getFaderColor(val);
-                const group = document.getElementById(`n-${key}`);
-                group.querySelector('.flare-bloom').style.fill = color;
-                const light = group.querySelector('.icon-light');
-                const shadow = group.querySelector('.icon-shadow');
+                
+                // Color the SVG bloom
+                document.getElementById(`b-${key}`).style.fill = color;
+                
+                // Find icons in the overlay
+                const container = document.querySelector(`.node-container[data-key="${key}"]`);
+                const light = container.querySelector('.icon-light');
+                const shadow = container.querySelector('.icon-shadow');
+                
                 const lightOpacity = val / 100;
                 const shadowOpacity = 1 - (val / 100);
+                
                 light.style.opacity = lightOpacity;
                 shadow.style.opacity = shadowOpacity;
                 light.style.stroke = color; light.style.fill = color;
@@ -118,20 +177,20 @@
             });
             const state = {};
             KEYS.forEach(k => state[k] = document.getElementById(`in-${k}`).value);
-            localStorage.setItem('sovereign_equi_v5', JSON.stringify(state));
+            localStorage.setItem('sovereign_final_v6', JSON.stringify(state));
         }
 
         function logSnapshot() {
-            const history = JSON.parse(localStorage.getItem('sovereign_history_v5') || '[]');
+            const history = JSON.parse(localStorage.getItem('sovereign_history_v6') || '[]');
             const snap = { t: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };
             KEYS.forEach(k => snap[k] = document.getElementById(`in-${k}`).value);
             history.push(snap);
             if(history.length > 50) history.shift();
-            localStorage.setItem('sovereign_history_v5', JSON.stringify(history));
+            localStorage.setItem('sovereign_history_v6', JSON.stringify(history));
         }
 
         function renderChart() {
-            const history = JSON.parse(localStorage.getItem('sovereign_history_v5') || '[]');
+            const history = JSON.parse(localStorage.getItem('sovereign_history_v6') || '[]');
             const ctx = document.getElementById('mainChart').getContext('2d');
             if(myChart) myChart.destroy();
             myChart = new Chart(ctx, {
@@ -149,7 +208,7 @@
         }
 
         function exportData() {
-            const data = { state: localStorage.getItem('sovereign_equi_v5'), history: localStorage.getItem('sovereign_history_v5') };
+            const data = { state: localStorage.getItem('sovereign_final_v6'), history: localStorage.getItem('sovereign_history_v6') };
             prompt("SAVE THIS CODE:", btoa(JSON.stringify(data)));
         }
 
@@ -158,8 +217,8 @@
             if (str) {
                 try {
                     const data = JSON.parse(atob(str));
-                    localStorage.setItem('sovereign_equi_v5', data.state);
-                    localStorage.setItem('sovereign_history_v5', data.history);
+                    localStorage.setItem('sovereign_final_v6', data.state);
+                    localStorage.setItem('sovereign_history_v6', data.history);
                     location.reload();
                 } catch(e) { alert("Error"); }
             }
@@ -174,7 +233,7 @@
         }
 
         lucide.createIcons();
-        const saved = JSON.parse(localStorage.getItem('sovereign_equi_v5') || '{"assets":50,"serotonin":50,"health":50,"nic":50,"mj":50,"alc":50,"food":50,"bull":50}');
+        const saved = JSON.parse(localStorage.getItem('sovereign_final_v6') || '{"assets":50,"serotonin":50,"health":50,"nic":50,"mj":50,"alc":50,"food":50,"bull":50}');
         KEYS.forEach(k => document.getElementById(`in-${k}`).value = saved[k]);
         setTimeout(updateUI, 100);
     </script>
