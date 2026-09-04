@@ -1,261 +1,182 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Equilateral Balance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap');
+        body { background: #020406; color: #f8fafc; font-family: 'Inter', sans-serif; touch-action: manipulation; }
+        
+        /* Sacred Geometry */
+        .white-line { stroke: #fff; stroke-width: 0.6; fill: none; opacity: 0.2; }
+        .psy-circle { stroke-width: 1; fill: none; animation: chroma 12s infinite linear; }
+        @keyframes chroma { 0% { stroke: #ff00ff; } 50% { stroke: #00ffff; } 100% { stroke: #ff00ff; } }
+        
+        .flare-bloom { transition: fill 0.4s; filter: blur(15px); opacity: 0.3; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }
+        
+        .icon-light, .icon-shadow { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            transition: opacity 0.4s ease, stroke 0.4s ease, fill 0.4s ease;
+            stroke-width: 1.5; 
+            fill-opacity: 0.3;
+        }
+
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-runnable-track { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #fff; margin-top: -8px; border: 2px solid #020406; box-shadow: 0 0 12px rgba(255,255,255,0.4); }
+        
+        .hidden { display: none; }
+        .tab-active { color: #10b981; border-bottom: 2px solid #10b981; }
+    </style>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Sovereign Morph&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&amp;display=swap');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body { background: #020406; color: #f8fafc; font-family: 'Inter', sans-serif; touch-action: manipulation; overflow-x: hidden; }</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Symbols */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.white-line { stroke: #fff; stroke-width: 0.6; fill: none; opacity: 0.3; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.psy-circle { stroke-width: 1; fill: none; animation: chroma 12s infinite linear; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes chroma { 0% { stroke: #ff00ff; } 50% { stroke: #00ffff; } 100% { stroke: #ff00ff; } }</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.flare-bloom { transition: fill 0.4s; filter: blur(12px); opacity: 0.3; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Icon Morphing */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.icon-light, .icon-shadow {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute; top: 0; left: 0; width: 100%; height: 100%;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: opacity 0.4s ease, stroke 0.4s ease;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>stroke-width: 1.5; fill: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Sliders */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input[type=range]::-webkit-slider-runnable-track { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #fff; margin-top: -8px; border: 2px solid #020406; box-shadow: 0 0 10px rgba(255,255,255,0.5); }</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.hidden { display: none; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.tab-active { color: #10b981; border-bottom: 2px solid #10b981; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="flex flex-col min-h-screen"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- HOME PAGE --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;main id="page-home" class="flex-1 flex flex-col items-center p-4 pb-28"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="relative w-full max-w-sm aspect-square my-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg viewBox="0 0 100 100" class="w-full h-full overflow-visible"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;polygon points="50,8 90,82 10,82" class="white-line" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;path d="M50,86 L33,39 L78,68 L22,68 L67,39 Z" class="white-line" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;circle cx="50" cy="58" r="28" class="psy-circle" /&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Morphing Nodes --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-assets"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="50" cy="8" r="8" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="45" y="-1" width="10" height="10"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="coins" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="flame" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-serotonin"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="10" cy="82" r="8" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="5" y="85" width="10" height="10"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="atom" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="skull" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-health"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="90" cy="82" r="8" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="85" y="85" width="10" height="10"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="activity" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="heart-off" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-nic"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="33" cy="39" r="7" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="29" y="34" width="8" height="8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="hourglass" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="wind" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-mj"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="67" cy="39" r="7" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="63" y="34" width="8" height="8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="music" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="cloud" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-alc"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="78" cy="68" r="7" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="81" y="65" width="8" height="8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="coffee" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="glass-water" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-food"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="50" cy="86" r="7" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="46" y="90" width="8" height="8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="utensils" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="pizza" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g id="n-bull"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;circle cx="22" cy="68" r="7" class="flare-bloom"/&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;foreignObject x="11" y="65" width="8" height="8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative w-full h-full"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="snowflake" class="icon-light"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;i data-lucide="zap" class="icon-shadow"&gt;&lt;/i&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/foreignObject&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/g&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Core --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;g transform="translate(50, 58) scale(0.12)"&gt;&lt;circle r="100" fill="#fff"/&gt;&lt;path d="M 0,-100 A 100,100 0 0,1 0,100 A 50,50 0 0,1 0,0 A 50,50 0 0,0 0,-100" fill="#000"/&gt;&lt;/g&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="w-full max-w-md space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="glass p-5 space-y-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-assets" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-serotonin" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-health" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="glass p-5 space-y-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-nic" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-mj" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-alc" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-food" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="range" id="in-bull" oninput="updateUI()" onchange="logSnapshot()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- STATS PAGE --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;main id="page-stats" class="hidden flex-1 p-6 pb-28 overflow-y-auto"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="glass p-4 mb-4"&gt;&lt;canvas id="mainChart"&gt;&lt;/canvas&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="stats-list" class="space-y-3"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- NAV --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav class="fixed bottom-0 w-full bg-black/90 backdrop-blur-md border-t border-white/5 flex justify-around p-5"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="showPage('home')" id="nav-home" class="tab-active text-[10px] uppercase font-bold tracking-widest"&gt;Symbol&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onclick="showPage('stats')" id="nav-stats" class="text-slate-500 text-[10px] uppercase font-bold tracking-widest"&gt;Analytics&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const KEYS = ['assets', 'serotonin', 'health', 'nic', 'mj', 'alc', 'food', 'bull'];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let myChart = null;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function getFaderColor(p) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let r, g;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (p &lt; 50) { r = 255; g = Math.round((p / 50) * 165); }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>else { r = Math.round(255 - ((p - 50) / 50) * 255); g = Math.round(165 + ((p - 50) / 50) * 90); }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return `rgb(${r},${g},0)`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function updateUI() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>KEYS.forEach(key =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const val = document.getElementById(`in-${key}`).value;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const color = getFaderColor(val);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const group = document.getElementById(`n-${key}`);</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Color the bloom</p>
-<p class="p1"><span class="Apple-converted-space">                </span>group.querySelector('.flare-bloom').style.fill = color;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Morph icons</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const light = group.querySelector('.icon-light');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const shadow = group.querySelector('.icon-shadow');</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Opacity logic</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const lightOpacity = val / 100;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const shadowOpacity = 1 - (val / 100);</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>light.style.opacity = lightOpacity;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>shadow.style.opacity = shadowOpacity;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>light.style.stroke = color;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>shadow.style.stroke = color;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Shadow icons get a slight flicker/blur if they are visible</p>
-<p class="p1"><span class="Apple-converted-space">                </span>shadow.style.filter = shadowOpacity &gt; 0.5 ? `drop-shadow(0 0 5px ${color})` : 'none';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const state = {};</p>
-<p class="p1"><span class="Apple-converted-space">            </span>KEYS.forEach(k =&gt; state[k] = document.getElementById(`in-${k}`).value);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('morph_balance_v3', JSON.stringify(state));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function logSnapshot() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const history = JSON.parse(localStorage.getItem('morph_history_v3') || '[]');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const snap = { t: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };</p>
-<p class="p1"><span class="Apple-converted-space">            </span>KEYS.forEach(k =&gt; snap[k] = document.getElementById(`in-${k}`).value);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>history.push(snap);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(history.length &gt; 40) history.shift();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('morph_history_v3', JSON.stringify(history));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function renderChart() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const history = JSON.parse(localStorage.getItem('morph_history_v3') || '[]');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const ctx = document.getElementById('mainChart').getContext('2d');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(myChart) myChart.destroy();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>myChart = new Chart(ctx, {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>type: 'line',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>labels: history.map(h =&gt; h.t),</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>datasets: KEYS.map(k =&gt; ({</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>data: history.map(h =&gt; h[k]),</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: getFaderColor(history[history.length-1]?.[k] || 50),</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 2, pointRadius: 0, tension: 0.4</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}))</p>
-<p class="p1"><span class="Apple-converted-space">                </span>},</p>
-<p class="p1"><span class="Apple-converted-space">                </span>options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { display: false } } }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>function showPage(p) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('page-home').classList.toggle('hidden', p !== 'home');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('page-stats').classList.toggle('hidden', p !== 'stats');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('nav-home').classList.toggle('tab-active', p === 'home');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('nav-stats').classList.toggle('tab-active', p === 'stats');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(p === 'stats') renderChart();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>lucide.createIcons();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const saved = JSON.parse(localStorage.getItem('morph_balance_v3') || '{"assets":50,"serotonin":50,"health":50,"nic":50,"mj":50,"alc":50,"food":50,"bull":50}');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>KEYS.forEach(k =&gt; document.getElementById(`in-${k}`).value = saved[k]);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>setTimeout(updateUI, 100);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="flex flex-col min-h-screen">
+
+    <main id="page-home" class="flex-1 flex flex-col items-center p-4 pb-28">
+        <div class="relative w-full max-w-sm aspect-square my-6">
+            <svg viewBox="0 0 100 100" class="w-full h-full overflow-visible">
+                
+                <!-- Equilateral Triangle Geometry -->
+                <!-- Top: (50, 15.7), Bottom Left: (10, 85), Bottom Right: (90, 85) -->
+                <polygon points="50,15.7 90,85 10,85" class="white-line" />
+                
+                <!-- Inner Phasing Circle (Centered at Triangle Centroid 50, 61.9) -->
+                <circle cx="50" cy="61.9" r="24" class="psy-circle" />
+
+                <!-- Inverted Pentagram (Tips touching the circle) -->
+                <path d="M50,85.9 L36.5,43.3 L72.8,69.5 L27.2,69.5 L63.5,43.3 Z" class="white-line" />
+
+                <!-- Nodes -->
+                <!-- Triangle Vertices -->
+                <g id="n-assets"><circle cx="50" cy="15.7" r="10" class="flare-bloom"/><foreignObject x="44" y="8" width="12" height="12"><div class="relative w-full h-full"><i data-lucide="coins" class="icon-light"></i><i data-lucide="flame" class="icon-shadow"></i></div></foreignObject></g>
+                <g id="n-serotonin"><circle cx="10" cy="85" r="10" class="flare-bloom"/><foreignObject x="4" y="78" width="12" height="12"><div class="relative w-full h-full"><i data-lucide="atom" class="icon-light"></i><i data-lucide="skull" class="icon-shadow"></i></div></foreignObject></g>
+                <g id="n-health"><circle cx="90" cy="85" r="10" class="flare-bloom"/><foreignObject x="84" y="78" width="12" height="12"><div class="relative w-full h-full"><i data-lucide="activity" class="icon-light"></i><i data-lucide="heart-off" class="icon-shadow"></i></div></foreignObject></g>
+
+                <!-- Pentagram Vertices (Clockwise starting from Top Left) -->
+                <g id="n-nic"><circle cx="36.5" cy="43.3" r="8" class="flare-bloom"/><foreignObject x="32.5" y="38" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="hourglass" class="icon-light"></i><i data-lucide="wind" class="icon-shadow"></i></div></foreignObject></g>
+                <g id="n-mj"><circle cx="63.5" cy="43.3" r="8" class="flare-bloom"/><foreignObject x="59.5" y="38" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="music" class="icon-light"></i><i data-lucide="cloud" class="icon-shadow"></i></div></foreignObject></g>
+                <g id="n-alc"><circle cx="72.8" cy="69.5" r="8" class="flare-bloom"/><foreignObject x="74" y="66" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="coffee" class="icon-light"></i><i data-lucide="glass-water" class="icon-shadow"></i></div></foreignObject></g>
+                <g id="n-food"><circle cx="50" cy="85.9" r="8" class="flare-bloom"/><foreignObject x="46" y="88" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="utensils" class="icon-light"></i><i data-lucide="pizza" class="icon-shadow"></i></div></foreignObject></g>
+                <g id="n-bull"><circle cx="27.2" cy="69.5" r="8" class="flare-bloom"/><foreignObject x="18" y="66" width="8" height="8"><div class="relative w-full h-full"><i data-lucide="snowflake" class="icon-light"></i><i data-lucide="zap" class="icon-shadow"></i></div></foreignObject></g>
+
+                <!-- Centered Yin Yang -->
+                <g transform="translate(50, 61.9) scale(0.12)"><circle r="100" fill="#fff"/><path d="M 0,-100 A 100,100 0 0,1 0,100 A 50,50 0 0,1 0,0 A 50,50 0 0,0 0,-100" fill="#000"/></g>
+            </svg>
+        </div>
+
+        <div class="w-full max-w-md space-y-4 px-2">
+            <div class="glass p-5 space-y-7"><input type="range" id="in-assets" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-serotonin" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-health" oninput="updateUI()" onchange="logSnapshot()"></div>
+            <div class="glass p-5 space-y-7"><input type="range" id="in-nic" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-mj" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-alc" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-food" oninput="updateUI()" onchange="logSnapshot()"><input type="range" id="in-bull" oninput="updateUI()" onchange="logSnapshot()"></div>
+        </div>
+    </main>
+
+    <main id="page-stats" class="hidden flex-1 p-6 pb-28 overflow-y-auto">
+        <div class="glass p-4 mb-4"><canvas id="mainChart"></canvas></div>
+        <div class="flex gap-2 mb-6">
+            <button onclick="exportData()" class="flex-1 glass p-3 text-[10px] uppercase font-bold tracking-widest text-emerald-400">Backup</button>
+            <button onclick="importData()" class="flex-1 glass p-3 text-[10px] uppercase font-bold tracking-widest text-blue-400">Restore</button>
+        </div>
+        <div id="stats-list" class="space-y-3"></div>
+    </main>
+
+    <nav class="fixed bottom-0 w-full bg-black/90 backdrop-blur-md border-t border-white/5 flex justify-around p-5">
+        <button onclick="showPage('home')" id="nav-home" class="tab-active text-[10px] uppercase font-bold tracking-widest">Symbol</button>
+        <button onclick="showPage('stats')" id="nav-stats" class="text-slate-500 text-[10px] uppercase font-bold tracking-widest">Analytics</button>
+    </nav>
+
+    <script>
+        const KEYS = ['assets', 'serotonin', 'health', 'nic', 'mj', 'alc', 'food', 'bull'];
+        let myChart = null;
+
+        function getFaderColor(p) {
+            let r, g;
+            if (p < 50) { r = 255; g = Math.round((p / 50) * 165); } 
+            else { r = Math.round(255 - ((p - 50) / 50) * 255); g = Math.round(165 + ((p - 50) / 50) * 90); }
+            return `rgb(${r},${g},0)`;
+        }
+
+        function updateUI() {
+            KEYS.forEach(key => {
+                const val = document.getElementById(`in-${key}`).value;
+                const color = getFaderColor(val);
+                const group = document.getElementById(`n-${key}`);
+                group.querySelector('.flare-bloom').style.fill = color;
+                const light = group.querySelector('.icon-light');
+                const shadow = group.querySelector('.icon-shadow');
+                const lightOpacity = val / 100;
+                const shadowOpacity = 1 - (val / 100);
+                light.style.opacity = lightOpacity;
+                shadow.style.opacity = shadowOpacity;
+                light.style.stroke = color; light.style.fill = color;
+                shadow.style.stroke = color; shadow.style.fill = color;
+                light.style.fillOpacity = 0.1 + (lightOpacity * 0.4);
+                shadow.style.fillOpacity = 0.1 + (shadowOpacity * 0.4);
+            });
+            const state = {};
+            KEYS.forEach(k => state[k] = document.getElementById(`in-${k}`).value);
+            localStorage.setItem('sovereign_equi_v5', JSON.stringify(state));
+        }
+
+        function logSnapshot() {
+            const history = JSON.parse(localStorage.getItem('sovereign_history_v5') || '[]');
+            const snap = { t: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) };
+            KEYS.forEach(k => snap[k] = document.getElementById(`in-${k}`).value);
+            history.push(snap);
+            if(history.length > 50) history.shift();
+            localStorage.setItem('sovereign_history_v5', JSON.stringify(history));
+        }
+
+        function renderChart() {
+            const history = JSON.parse(localStorage.getItem('sovereign_history_v5') || '[]');
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            if(myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: history.map(h => h.t),
+                    datasets: KEYS.map(k => ({
+                        data: history.map(h => h[k]),
+                        borderColor: getFaderColor(history[history.length-1]?.[k] || 50),
+                        borderWidth: 2, pointRadius: 0, tension: 0.4
+                    }))
+                },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { display: false } } }
+            });
+        }
+
+        function exportData() {
+            const data = { state: localStorage.getItem('sovereign_equi_v5'), history: localStorage.getItem('sovereign_history_v5') };
+            prompt("SAVE THIS CODE:", btoa(JSON.stringify(data)));
+        }
+
+        function importData() {
+            const str = prompt("PASTE BACKUP CODE:");
+            if (str) {
+                try {
+                    const data = JSON.parse(atob(str));
+                    localStorage.setItem('sovereign_equi_v5', data.state);
+                    localStorage.setItem('sovereign_history_v5', data.history);
+                    location.reload();
+                } catch(e) { alert("Error"); }
+            }
+        }
+
+        function showPage(p) {
+            document.getElementById('page-home').classList.toggle('hidden', p !== 'home');
+            document.getElementById('page-stats').classList.toggle('hidden', p !== 'stats');
+            document.getElementById('nav-home').classList.toggle('tab-active', p === 'home');
+            document.getElementById('nav-stats').classList.toggle('tab-active', p === 'stats');
+            if(p === 'stats') renderChart();
+        }
+
+        lucide.createIcons();
+        const saved = JSON.parse(localStorage.getItem('sovereign_equi_v5') || '{"assets":50,"serotonin":50,"health":50,"nic":50,"mj":50,"alc":50,"food":50,"bull":50}');
+        KEYS.forEach(k => document.getElementById(`in-${k}`).value = saved[k]);
+        setTimeout(updateUI, 100);
+    </script>
 </body>
 </html>
